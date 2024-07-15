@@ -147,7 +147,6 @@ export class TodoService {
 
   async updateStatus(userId: number, noteId: number) {
     try {
-      
       const user = await this.userRepository.findOneBy({ id: userId });
       if (!user) {
         const res: TodoResponse = {
