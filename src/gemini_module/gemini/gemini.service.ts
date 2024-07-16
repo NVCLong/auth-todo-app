@@ -3,7 +3,7 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 
 import { PromptDto } from '../prompt.dto';
 import { ConfigService } from '@nestjs/config';
-import { TracingService } from '../../tracing/tracing.service';
+import { TracingService } from '../../logger/tracing/tracing.service';
 
 type PromptResponse = {
   question: string;

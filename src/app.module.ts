@@ -11,8 +11,13 @@ import * as redisStore from 'cache-manager-redis-store';
 import { typeOrmConfigASync } from './config/typeorm.config';
 import { GeminiModule } from './gemini_module/gemini.module';
 import * as dotenv from 'dotenv';
-import { TracingMiddlware } from './tracing/tracing.middleware';
-import { TracingModule } from './tracing/tracing.module';
+import { TracingMiddlware } from './logger/tracing/tracing.middleware';
+import { TracingModule } from './logger/tracing/tracing.module';
+import { GlobalLogger } from './logger/global-logger/global-logger.service';
+import { GlobalLoggerModule } from './logger/global-logger/global-logger.module';
+import { GlobalLoggerMiddleware } from './logger/global-logger/global-logger.middleware';
+import { PhotoModule } from './photo_module/photo.module';
+import { AzureBlobModule } from './azure_module/azure-blob.module';
 dotenv.config();
 @Module({
   imports: [
@@ -33,6 +38,9 @@ dotenv.config();
     AuthModule,
     GeminiModule,
     TracingModule,
+    GlobalLoggerModule,
+    PhotoModule,
+    AzureBlobModule
   ],
   providers: [
     {
@@ -43,6 +51,7 @@ dotenv.config();
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
+    consumer.apply(GlobalLoggerMiddleware).forRoutes("*")
     consumer.apply(TracingMiddlware).forRoutes('*');
   }
 }

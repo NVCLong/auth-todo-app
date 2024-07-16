@@ -13,7 +13,5 @@ export class TracingMiddlware implements NestMiddleware {
   use(req: any, res: any, next: (error?: Error | any) => void) {
     const store= {traceId: randomUUID()}
     this.als.run(store,()=> next())
-    // this.logger.setRequestId(randomUUID());
-    // next();
   }
 }

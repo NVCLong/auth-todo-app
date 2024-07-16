@@ -1,7 +1,7 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { GeminiService } from './gemini.service';
 import { PromptDto } from '../prompt.dto';
-import { TracingService } from '../../tracing/tracing.service';
+import { TracingService } from '../../logger/tracing/tracing.service';
 
 @Controller('gemini')
 export class GeminiController {

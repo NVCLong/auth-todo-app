@@ -1,6 +1,7 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './user.entity';
 import { Exclude } from 'class-transformer';
+import { Photo } from './photo.entity';
 
 @Entity()
 export class Todo {
@@ -22,4 +23,7 @@ export class Todo {
 
   @Column()
   title: string;
+
+  @OneToMany(()=> Photo, (photo)=>photo.todo)
+  photos:Photo[]
 }

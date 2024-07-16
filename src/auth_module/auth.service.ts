@@ -8,7 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { jwtSecret } from 'src/untils/constants';
 import { Request, Response } from 'express';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TracingService } from 'src/tracing/tracing.service';
+import { TracingService } from 'src/logger/tracing/tracing.service';
 type LoginResponse = {
   message: string;
   accessToken?: string;
@@ -26,7 +26,7 @@ export class AuthService {
     private jwt: JwtService,
     private readonly logger: TracingService,
   ) {
-    this.logger.setContext(AuthService.name);
+    
   }
 
   async login(
@@ -35,7 +35,7 @@ export class AuthService {
     res: Response,
   ): Promise<LoginResponse> {
     try {
-      this.logger.debug('Solving login request');
+      this.logger.debug('Solving login request', [AuthService.name]);
       const username = user.username;
       const foundUser = await this.userRepository.findOneBy({
         username: username,
@@ -54,18 +54,18 @@ export class AuthService {
             {
               httpOnly: true,
             };
-          this.logger.debug('Login successfully');
+          this.logger.debug('Login successfully', [AuthService.name]);
           res.json({
             message: 'login success',
             accessToken: accessToken,
             refreshToken: refreshToken,
           });
         } else {
-          this.logger.debug('Login fail via wrong password');
+          this.logger.debug('Login fail via wrong password', [AuthService.name]);
           res.json({ message: 'login failure with wrong password' });
         }
       } else {
-        this.logger.debug('Login fail via can not find username');
+        this.logger.debug('Login fail via can not find username', [AuthService.name]);
         res.json({ message: 'login failure' });
       }
     } catch (e) {

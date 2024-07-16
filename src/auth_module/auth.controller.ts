@@ -17,7 +17,7 @@ import { UserDto } from './dto/user.dto';
 import { RefreshJwtGuard } from 'src/common/guards/refresh-jwt.guard';
 import { Public } from 'src/meta/public.meta';
 import { ApiTags } from '@nestjs/swagger';
-import { TracingService } from 'src/tracing/tracing.service';
+import { TracingService } from 'src/logger/tracing/tracing.service';
 
 @Controller('auth')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -37,7 +37,7 @@ export class AuthController {
   @ApiTags('Authentication')
   @Post('login')
   async login(@Body() user: AuthDto, @Response() response, @Request() req) {
-    this.logger.verbose('Start to login ');
+    this.logger.verbose('Start to login ', [AuthController.name]);
     this.authService.login(user, req, response);
   }
 

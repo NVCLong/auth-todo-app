@@ -1,7 +1,7 @@
 import { Injectable, Logger, Scope } from '@nestjs/common';
 import { AsyncLocalStorage } from 'async_hooks';
 
-@Injectable({ scope: Scope.TRANSIENT })
+@Injectable({ scope: Scope.REQUEST })
 export class TracingService extends Logger {
   private requestId: string;
   constructor(private readonly als?: AsyncLocalStorage<any>) {
@@ -23,21 +23,25 @@ export class TracingService extends Logger {
   };
 
   verbose(message: any, ...optionalParams: any[]) {
-    super.verbose(this.getLogMessage(message), ...optionalParams);
+    this.setContext(optionalParams[0])
+    super.verbose(this.getLogMessage(message));
   }
 
   debug(message: any, ...optionalParams: any[]) {
-    super.debug(this.getLogMessage(message), ...optionalParams);
+    this.setContext(optionalParams[0])
+    super.debug(this.getLogMessage(message));
   }
 
   error(message: any, ...optionalParams: any[]) {
-    super.debug(this.getLogMessage(message), ...optionalParams);
+    this.setContext(optionalParams[0])
+    super.debug(this.getLogMessage(message));
   }
-
   warn(message: any, ...optionalParams: any[]) {
-    super.debug(this.getLogMessage(message), ...optionalParams);
+    this.setContext(optionalParams[0])
+    super.debug(this.getLogMessage(message));
   }
   log(message: any, ...optionalParams: any[]) {
-    super.debug(this.getLogMessage(message), ...optionalParams);
+    this.setContext(optionalParams[0])
+    super.debug(this.getLogMessage(message));
   }
 }
