@@ -30,6 +30,7 @@ export class TodoService {
 
   async createNote(note: TodoDto, id: string): Promise<TodoResponse> {
     try {
+      console.log(id)
       this.logger.debug('Solving create note request', [TodoService.name]);
       const cacheUser = await this.cacheService.get(id);
       let user;
@@ -37,7 +38,6 @@ export class TodoService {
         this.logger.debug('Do not find user in cache', [TodoService.name]);
         const newTodo = new Todo();
         user = await this.userRepository.findOneBy({ id: parseInt(id) });
-
         if (!user) {
           const res: TodoResponse = {
             message: 'Invalid User',

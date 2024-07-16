@@ -3,7 +3,7 @@ import { DataSourceOptions } from 'typeorm';
 const dataSourceOptions: DataSourceOptions = {
   type: 'mysql',
   host: '127.0.0.1',
-  port: 3306,
+  port: 9090,
   database: 'tododb',
   username: 'root',
   password: '',

@@ -19,9 +19,28 @@ export class PhotoService {
 
   async uploadPhoto(body:PhotoDTO){
     try{
-
+      this.logger.verbose("Starting to solving upload photo request",[PhotoService.name])
+      const note= await this.todoRepository.findOneBy({id:body.noteId})
+      if(note===null){
+        this.logger.warn("Missing note Id", [PhotoService.name])
+        return {
+          message:"No note found, and upload fail",
+        }
+      }
+      const uploadStatus= this.azureBlobService.uploadImage(body.file)
+      if(!uploadStatus){
+        this.logger.error("Error uploading image", [PhotoService.name])
+      }
+      this.logger.log("Upload image successful", [PhotoService.name])
+      await this.photoRepository.create({
+        url: body.file.originalname,
+        todo:note
+      })
+      return {
+        message:"Successfully uploaded",
+      }
     }catch(e){
-     this.logger
+     this.logger.error("Error uploading image "+ e, [PhotoService.name])
     }
   }
 }

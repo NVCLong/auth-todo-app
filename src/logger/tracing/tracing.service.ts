@@ -1,7 +1,7 @@
 import { Injectable, Logger, Scope } from '@nestjs/common';
 import { AsyncLocalStorage } from 'async_hooks';
 
-@Injectable({ scope: Scope.REQUEST })
+@Injectable({ scope: Scope.DEFAULT })
 export class TracingService extends Logger {
   private requestId: string;
   constructor(private readonly als?: AsyncLocalStorage<any>) {
@@ -11,6 +11,7 @@ export class TracingService extends Logger {
   setContext(context: string) {
     this.context = context;
   }
+
 
 
   private getLogMessage = (message) => {
@@ -34,14 +35,14 @@ export class TracingService extends Logger {
 
   error(message: any, ...optionalParams: any[]) {
     this.setContext(optionalParams[0])
-    super.debug(this.getLogMessage(message));
+    super.error(this.getLogMessage(message));
   }
   warn(message: any, ...optionalParams: any[]) {
     this.setContext(optionalParams[0])
-    super.debug(this.getLogMessage(message));
+    super.warn(this.getLogMessage(message));
   }
   log(message: any, ...optionalParams: any[]) {
     this.setContext(optionalParams[0])
-    super.debug(this.getLogMessage(message));
+    super.log(this.getLogMessage(message));
   }
 }

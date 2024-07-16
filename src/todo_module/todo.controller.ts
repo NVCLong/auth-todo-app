@@ -13,9 +13,6 @@ import {
   ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
-import { JwtAuthGuard } from 'src/common/guards/jwt.guard';
-import { Public } from 'src/meta/public.meta';
-import { Response, Request } from 'express';
 import { TodoDto } from './dto/todo.dto';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';

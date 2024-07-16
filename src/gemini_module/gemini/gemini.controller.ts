@@ -9,11 +9,10 @@ export class GeminiController {
     private readonly geminiService: GeminiService,
     private readonly logger: TracingService,
   ) {
-    this.logger.setContext(GeminiController.name);
   }
   @Post('')
   async replyTextPrompt(@Body() prompt: PromptDto) {
-    this.logger.verbose('Starting sending prompt');
-    return this.geminiService.genratedTextResponse(prompt);
+    this.logger.verbose('Starting sending prompt',[GeminiController.name]);
+    return this.geminiService.generatedTextResponse(prompt);
   }
 }
