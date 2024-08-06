@@ -1,0 +1,19 @@
+config:
+  target: 'http://localhost:3000/api'
+  phases:
+    - duration: 50
+      arrivalRate: 2
+
+scenarios:
+  - flow:
+      - loop:
+          - count: 100
+            flow:
+              - get:
+                  url: '/todo/1'
+                  headers:
+                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJqb2huX2RvZSIsImlhdCI6MTcyMTkwNjM0MCwiZXhwIjoxNzIxOTA5OTQwfQ.GXtCM2a7goYuja9muBSp0V6eU8BwzcClMVS_4GpchUM'
+              - get:
+                  url: '/todo'
+                  headers:
+                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJqb2huX2RvZSIsImlhdCI6MTcyMTkwNjM0MCwiZXhwIjoxNzIxOTA5OTQwfQ.GXtCM2a7goYuja9muBSp0V6eU8BwzcClMVS_4GpchUM'

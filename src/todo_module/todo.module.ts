@@ -9,9 +9,11 @@ import { User } from 'src/entities/user.entity';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { GeminiModule } from 'src/gemini_module/gemini.module';
+import { RedisModule } from 'src/redis/redis.module';
+import { RedisService } from 'src/redis/redis.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Todo, User]), GeminiModule],
+  imports: [TypeOrmModule.forFeature([Todo, User]), GeminiModule ],
   controllers: [TodoController],
   providers: [TodoService],
 })

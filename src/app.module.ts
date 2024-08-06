@@ -18,6 +18,11 @@ import { GlobalLoggerModule } from './logger/global-logger/global-logger.module'
 import { GlobalLoggerMiddleware } from './logger/global-logger/global-logger.middleware';
 import { PhotoModule } from './photo_module/photo.module';
 import { AzureBlobModule } from './azure_module/azure-blob.module';
+import { ClusterMiddleware } from './logger/cluster.middleware';
+import { RedisModule } from './redis/redis.module';
+import { RedisService } from './redis/redis.service';
+
+
 dotenv.config();
 @Module({
   imports: [
@@ -40,18 +45,24 @@ dotenv.config();
     TracingModule,
     GlobalLoggerModule,
     PhotoModule,
-    AzureBlobModule
+    AzureBlobModule,
+    RedisModule.register({
+      host: 'localhost',
+      port: 6379,
+      isGlobal: true
+    })
   ],
   providers: [
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
-    },
+    }
   ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(GlobalLoggerMiddleware).forRoutes("*")
-    consumer.apply(TracingMiddlware).forRoutes('*');
+    consumer.apply(TracingMiddlware).forRoutes('*')
+    consumer.apply(ClusterMiddleware).forRoutes('*')
   }
 }

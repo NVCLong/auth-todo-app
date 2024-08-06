@@ -30,7 +30,6 @@ export class AzureBlobService{
             const blockBlobClient= this.getBlobClient(url);
             await blockBlobClient.uploadData(file.buffer)
             return true
-
         }catch(e){
             this.logger.error(`Error while uploading image ${file.originalname}`,e)
             return false

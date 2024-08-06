@@ -5,6 +5,7 @@ import * as dotenv from 'dotenv';
 import helmet from 'helmet';
 import * as cookieParser from 'cookie-parser';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ClusterService } from './cluster.service';
 
 async function bootstrap() {
   dotenv.config();
@@ -32,4 +33,6 @@ async function bootstrap() {
   app.use(cookieParser());
   await app.listen(3000);
 }
+
 bootstrap();
+// ClusterService.clusterize(bootstrap)

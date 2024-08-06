@@ -10,8 +10,9 @@ export class TracingMiddlware implements NestMiddleware {
     private logger: TracingService,
   ) {}
 
-  use(req: any, res: any, next: (error?: Error | any) => void) {
-    const store= {traceId: randomUUID()}
-    this.als.run(store,()=> next())
+  use(req: Request, res: any, next: (error?: Error | any) => void) {
+    const requestId: string = req.headers['syncrequestid'] ?? randomUUID();
+    const store = { traceId: `${requestId}` };
+    this.als.run(store, () => next());
   }
 }

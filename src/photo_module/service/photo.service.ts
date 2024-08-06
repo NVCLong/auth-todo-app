@@ -27,20 +27,34 @@ export class PhotoService {
           message:"No note found, and upload fail",
         }
       }
-      const uploadStatus= this.azureBlobService.uploadImage(body.file)
+      const uploadStatus= await this.azureBlobService.uploadImage(body.file)
       if(!uploadStatus){
         this.logger.error("Error uploading image", [PhotoService.name])
       }
-      this.logger.log("Upload image successful", [PhotoService.name])
-      await this.photoRepository.create({
+      
+      const photo=await this.photoRepository.create({
         url: body.file.originalname,
         todo:note
       })
+      await this.photoRepository.save(photo)
+      this.logger.log("Upload image successfully", [PhotoService.name])
       return {
         message:"Successfully uploaded",
       }
     }catch(e){
      this.logger.error("Error uploading image "+ e, [PhotoService.name])
+    }
+  }
+
+
+  async getPhoto(fileName:string){
+    try{
+      this.logger.verbose("Starting to solving get photo request",[PhotoService.name])
+      const file= await this.azureBlobService.getImage(fileName);
+      this.logger.log("Get file success "+ fileName,[PhotoService.name])
+      return file
+    }catch(e){
+      this.logger.error("Error getting image "+ e, [PhotoService.name])
     }
   }
 }
