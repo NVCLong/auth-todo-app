@@ -1,7 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import {TypeOrmModule} from '@nestjs/typeorm'
-import { TodoModule } from './todo_module/todo.module';
 import { AuthModule } from './auth_module/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './common/guards/jwt.guard'; 
@@ -27,7 +26,7 @@ dotenv.config()
     host: 'localhost',
     port: 6379,
 
-  }),TodoModule, AuthModule , GeminiModule, TracingModule],
+  }), AuthModule , GeminiModule, TracingModule],
   providers:[{
     provide: APP_GUARD,
     useClass: JwtAuthGuard,
