@@ -1,9 +1,6 @@
+import { IsEmail, IsString, IsNotEmpty } from 'class-validator';
 
-import { IsEmail, IsString, IsNotEmpty } from "class-validator";
-
-
-export class TodoDto{
-
-    @IsNotEmpty()
-    content: string;
+export class TodoDto {
+  @IsNotEmpty()
+  content: string;
 }

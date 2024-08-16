@@ -1,5 +1,5 @@
-export enum ExactLevel{
-    Low,
-    Medium,
-    High
+export enum ExactLevel {
+  Low,
+  Medium,
+  High,
 }

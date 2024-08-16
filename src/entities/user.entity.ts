@@ -1,29 +1,25 @@
-import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
-import { Todo } from "./todo.entity";
-import { Exclude } from "class-transformer";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Todo } from './todo.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @PrimaryGeneratedColumn()
-    id: number
+  @Column()
+  username: string;
 
-    @Column()
-    username: string
+  @Column()
+  email: string;
 
-    @Column()
-    email: string
+  @Exclude()
+  @Column()
+  password: string;
 
-    @Exclude()
-    @Column()
-    password: string
+  @Column()
+  phone: number;
 
-    @Column()
-    phone: number
-
-
-    @OneToMany(()=> Todo, (todo)=> todo.user)
-    todos: Todo[]
-
-    
+  @OneToMany(() => Todo, (todo) => todo.user)
+  todos: Todo[];
 }
